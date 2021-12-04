@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import Cell from "./Cell.tsx";
+import Cell from "./cell.tsx";
 import styled from "styled-components";
 
 const numRows = 35;
@@ -21,12 +21,14 @@ const Universe: React.FC = () => {
     return rows;
   });
 
-  console.log("Called");
   return (
     <Grid>
-      {universe.map((row, i) =>
-        row.map((cellStatus, j) => <Cell cellStatus={cellStatus} />)
-      )}
+      {universe.map((row, i) => {
+        return row.map((cellStatus, j) => {
+          return <Cell key={`${i}-${j}`} cellStatus={cellStatus} />;
+        });
+      })}
+      )
     </Grid>
   );
 };
