@@ -1,0 +1,7 @@
+.alive {
+  background-color: yellow;
+}
+
+.dead {
+  background-color: none;
+}
