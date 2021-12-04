@@ -13,10 +13,11 @@ const Grid = styled.div`
 const Cell = styled.div`
   height: 15px;
   width: 15px;
-  border: solid black 1px;
+  border: solid 1px #555;
 `;
 
 const Universe: React.FC = () => {
+  const [running, setAction] = useState(false);
   const [universe, setUniverse] = useState(() => {
     const rows = [];
     for (let i = 0; i < numRows; i++) {
@@ -26,26 +27,47 @@ const Universe: React.FC = () => {
     return rows;
   });
 
-  // copy of universe for next generation
-  let nextUniverse = universe;
+  const runSimulation = (time?: number) => {
+    if (!running) {
+      return;
+    }
+    // copy of universe for next generation
+    let nextUniverse = universe;
+    time = time || 1000;
+    setTimeout(() => {
+      console.log("Running...");
+      setUniverse(Array.from(nextUniverse));
+    }, time);
+  };
 
   return (
-    <Grid>
-      {universe.map((row, i) => {
-        return row.map((cellStatus, j) => {
-          return (
-            <Cell
-              className={cellStatus ? "alive" : "dead"}
-              key={`${i}-${j}`}
-              onClick={() => {
-                nextUniverse[i][j] = !cellStatus ? 1 : 0;
-                setUniverse(Array.from(nextUniverse));
-              }}
-            ></Cell>
-          );
-        });
-      })}
-    </Grid>
+    <>
+      <Grid>
+        {universe.map((row, i) => {
+          return row.map((cellStatus, j) => {
+            return (
+              <Cell
+                className={cellStatus ? "alive" : "dead"}
+                key={`${i}-${j}`}
+                onClick={() => {
+                  universe[i][j] = !cellStatus ? 1 : 0;
+                  setUniverse(Array.from(universe));
+                }}
+              ></Cell>
+            );
+          });
+        })}
+      </Grid>
+      <button
+        onClick={() => {
+          setAction(true);
+          runSimulation();
+        }}
+      >
+        Play
+      </button>
+      <button onClick={() => setAction(false)}>Stop</button>
+    </>
   );
 };
 
