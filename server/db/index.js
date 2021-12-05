@@ -14,15 +14,15 @@ db.once("open", () => {
   console.log("successfully connected to database");
 });
 
-const schema = new mongoose.Schema(
+const Universes = new mongoose.Schema(
   {
     name: { type: String, required: true },
     universe: { type: Array, required: true },
-    preset: { type: Boolean, required: true },
+    preset: { type: Boolean, default: false },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model("universes", schema);
+module.exports = mongoose.model("universes", Universes);
