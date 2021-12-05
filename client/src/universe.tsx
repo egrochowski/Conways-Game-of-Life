@@ -1,9 +1,9 @@
 import * as React from "react";
-import { useState } from "react";
+import produce, { Immer } from "immer";
 import styled from "styled-components";
 
-const numRows = 35;
-const numCols = 55;
+const numRows = 30;
+const numCols = 50;
 
 const Grid = styled.div`
   display: grid;
@@ -17,8 +17,7 @@ const Cell = styled.div`
 `;
 
 const Universe: React.FC = () => {
-  const [running, setAction] = useState(false);
-  const [universe, setUniverse] = useState(() => {
+  const [universe, setUniverse] = React.useState(() => {
     const rows = [];
     for (let i = 0; i < numRows; i++) {
       // create an empty universe; all cells are dead
@@ -26,18 +25,63 @@ const Universe: React.FC = () => {
     }
     return rows;
   });
+  const [isRunning, setAction] = React.useState(false);
+  const runningRef = React.useRef(isRunning);
+  runningRef.current = isRunning;
 
-  const runSimulation = (time?: number) => {
-    if (!running) {
+  const runSimulation = React.useCallback(() => {
+    if (!runningRef.current) {
       return;
     }
-    // copy of universe for next generation
-    let nextUniverse = universe;
-    time = time || 1000;
-    setTimeout(() => {
-      console.log("Running...");
-      setUniverse(Array.from(nextUniverse));
-    }, time);
+    setUniverse(getNextGeneration);
+
+    setTimeout(runSimulation, 500);
+  }, []);
+
+  const getNextGeneration = (universe: number[][]) => {
+    {
+      return produce(universe, (nextUniverse: number[][]) => {
+        // x and y represent a cell's coordinates in the universe
+        for (let x = 0; x < numRows; x++) {
+          for (let y = 0; y < numCols; y++) {
+            let neighborsAlive = 0;
+
+            for (let i = x - 1; i <= x + 1; i++) {
+              for (let j = y - 1; j <= y + 1; j++) {
+                if (
+                  i >= 0 &&
+                  j >= 0 &&
+                  i < numRows &&
+                  j < numCols &&
+                  universe[i][j]
+                ) {
+                  if (i === x && j === y) {
+                    // do nothing
+                  } else {
+                    neighborsAlive++;
+                  }
+                }
+              }
+            }
+
+            // if a cell is alive...
+            if (universe[x][y]) {
+              if (neighborsAlive === 2 || neighborsAlive === 3) {
+                nextUniverse[x][y] = 1;
+              } else {
+                nextUniverse[x][y] = 0;
+              }
+            } else {
+              if (neighborsAlive === 3) {
+                nextUniverse[x][y] = 1;
+              } else {
+                nextUniverse[x][y] = 0;
+              }
+            }
+          }
+        }
+      });
+    }
   };
 
   return (
@@ -50,8 +94,10 @@ const Universe: React.FC = () => {
                 className={cellStatus ? "alive" : "dead"}
                 key={`${i}-${j}`}
                 onClick={() => {
-                  universe[i][j] = !cellStatus ? 1 : 0;
-                  setUniverse(Array.from(universe));
+                  const uniCopy = produce(universe, (uniCopy) => {
+                    uniCopy[i][j] = cellStatus ? 0 : 1;
+                  });
+                  setUniverse(uniCopy);
                 }}
               ></Cell>
             );
@@ -60,13 +106,15 @@ const Universe: React.FC = () => {
       </Grid>
       <button
         onClick={() => {
-          setAction(true);
-          runSimulation();
+          setAction(!isRunning);
+          if (!isRunning) {
+            runningRef.current = true;
+            runSimulation();
+          }
         }}
       >
-        Play
+        {isRunning ? "Stop" : "Start"}
       </button>
-      <button onClick={() => setAction(false)}>Stop</button>
     </>
   );
 };
