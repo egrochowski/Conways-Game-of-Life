@@ -17,8 +17,8 @@ db.once("open", () => {
 const Universes = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    universe: { type: Array, required: true },
     preset: { type: Boolean, default: false },
+    universe: { type: Array, required: true },
   },
   {
     timestamps: true,
