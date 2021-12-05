@@ -1,5 +1,5 @@
 import * as React from "react";
-import produce, { Immer } from "immer";
+import produce from "immer";
 import styled from "styled-components";
 
 const numRows = 30;
@@ -10,21 +10,20 @@ const Grid = styled.div`
   grid-template-columns: repeat(${numCols}, 15px);
 `;
 
-const Cell = styled.div`
-  height: 15px;
-  width: 15px;
-  border: solid 1px #555;
-`;
+let initialState: number[][];
+let initialized = false;
+
+const reset = () => {
+  const uni = [];
+  for (let i = 0; i < numRows; i++) {
+    // create an empty universe; all cells are dead
+    uni.push(Array.from(Array(numCols), () => 0));
+  }
+  return uni;
+};
 
 const Universe: React.FC = () => {
-  const [universe, setUniverse] = React.useState(() => {
-    const rows = [];
-    for (let i = 0; i < numRows; i++) {
-      // create an empty universe; all cells are dead
-      rows.push(Array.from(Array(numCols), () => 0));
-    }
-    return rows;
-  });
+  const [universe, setUniverse] = React.useState(reset);
   const [isRunning, setAction] = React.useState(false);
   const runningRef = React.useRef(isRunning);
   runningRef.current = isRunning;
@@ -86,35 +85,52 @@ const Universe: React.FC = () => {
 
   return (
     <>
-      <Grid>
+      <Grid className="universe">
         {universe.map((row, i) => {
           return row.map((cellStatus, j) => {
             return (
-              <Cell
-                className={cellStatus ? "alive" : "dead"}
+              <div
+                className={cellStatus ? "alive cell" : "dead cell"}
                 key={`${i}-${j}`}
                 onClick={() => {
-                  const uniCopy = produce(universe, (uniCopy) => {
-                    uniCopy[i][j] = cellStatus ? 0 : 1;
-                  });
-                  setUniverse(uniCopy);
+                  setUniverse(
+                    produce(universe, (uniCopy) => {
+                      uniCopy[i][j] = cellStatus ? 0 : 1;
+                    })
+                  );
                 }}
-              ></Cell>
+              ></div>
             );
           });
         })}
       </Grid>
-      <button
-        onClick={() => {
-          setAction(!isRunning);
-          if (!isRunning) {
-            runningRef.current = true;
-            runSimulation();
-          }
-        }}
-      >
-        {isRunning ? "Stop" : "Start"}
-      </button>
+      <div className="menu">
+        <button
+          onClick={() => {
+            setAction(!isRunning);
+            if (!initialized) {
+              console.log("hi");
+              initialized = true;
+              initialState = universe;
+            }
+            if (!isRunning) {
+              runningRef.current = true;
+              runSimulation();
+            }
+          }}
+        >
+          {isRunning ? "Stop" : "Start"}
+        </button>
+        <button
+          className="reset"
+          onClick={() => {
+            setAction(false);
+            setUniverse((uni) => produce(uni, reset));
+          }}
+        >
+          Clear
+        </button>
+      </div>
     </>
   );
 };
