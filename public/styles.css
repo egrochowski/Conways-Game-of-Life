@@ -1,7 +1,40 @@
+html,
+body {
+  background-color: #1d284c;
+  font-family: "Zen Maru Gothic", sans-serif;
+  color: #eecfd4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-weight: lighter;
+}
+
+.cell {
+  height: 15px;
+  width: 15px;
+  border: solid 1px rgb(230 173 236 / 35%);
+}
+
+.cell:hover {
+  cursor: pointer;
+}
+
 .alive {
-  background-color: yellow;
+  background-color: #cfd4c5;
 }
 
 .dead {
   background-color: none;
+}
+
+#conway {
+  color: #eecfd4;
+  text-decoration: none;
+}
+
+#conway:hover {
+  text-decoration: underline;
 }
