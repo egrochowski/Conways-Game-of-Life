@@ -2,7 +2,13 @@ const db = require("./../db/");
 
 module.exports = {
   getPresets: async () => {
-    const results = db.find({});
-    return results;
+    return await db.find({});
+  },
+
+  addUniverse: async (universe) => {
+    const newUniverse = await new db(universe)
+      .save()
+      .then(() => console.log("we did it ?"))
+      .catch((e) => console.error(e));
   },
 };
