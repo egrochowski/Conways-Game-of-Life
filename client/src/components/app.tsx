@@ -68,7 +68,9 @@ const App = () => {
     }
   };
 
-  const handleReset = () => {
+  const handleClear = () => {
+    generations = 0;
+    initialized = false;
     setAction(false);
     setUniverse((uni: number[][]) => produce(uni, reset));
     initialState = reset();
@@ -91,6 +93,17 @@ const App = () => {
           console.error(e);
         });
     }
+  };
+
+  const handleReset = () => {
+    if (!initialState) {
+      return;
+    }
+    generations = 0;
+    setAction(false);
+    setUniverse((universe: number[][]) =>
+      produce(universe, () => initialState)
+    );
   };
 
   const getNextGeneration = (universe: number[][]) => {
@@ -140,10 +153,10 @@ const App = () => {
   };
 
   const runSimulation = React.useCallback(() => {
+    generations++;
     if (!runningRef.current) {
       return;
     }
-    generations++;
     setUniverse(getNextGeneration);
     setTimeout(runSimulation, 500);
   }, []);
@@ -159,6 +172,7 @@ const App = () => {
               className="options-menu"
               onPlayStop={handlePlayStop}
               onReset={handleReset}
+              onClear={handleClear}
               onSave={handleSave}
               isRunning={runningRef.current}
             ></Menu>
