@@ -7,6 +7,7 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(${numCols}, 1rem);
   cursor: pointer;
+  margin: 0 2rem 1rem 2rem;
 `;
 
 interface IUniverse {
