@@ -15,10 +15,11 @@ type PresetsType = {
 };
 
 const Sidebar: React.FC<PresetsType> = ({ presets, handleNewPreset }) => (
-  <div className="preset">
+  <div className="sidebar">
     {presets.map((universe, index) =>
       universe.preset ? (
         <span
+          className="preset"
           onClick={() => {
             handleNewPreset(index);
           }}
