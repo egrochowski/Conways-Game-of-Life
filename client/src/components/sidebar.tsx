@@ -5,8 +5,6 @@ interface Presets {
   name: String;
   preset: boolean;
   universe: number[][];
-  updatedAt: String;
-  _id: String;
 }
 
 type PresetsType = {
@@ -17,18 +15,17 @@ type PresetsType = {
 const Sidebar: React.FC<PresetsType> = ({ presets, handleNewPreset }) => (
   <div className="sidebar">
     <div className="presets-header">Presets</div>
-    {presets.map((universe, index) =>
-      universe.preset ? (
-        <span
-          className="preset"
-          onClick={() => {
-            handleNewPreset(index);
-          }}
-        >
-          {universe.name}
-        </span>
-      ) : null
-    )}
+    {presets.map((universe, index) => (
+      <span
+        key={index}
+        className="preset"
+        onClick={() => {
+          handleNewPreset(index);
+        }}
+      >
+        {universe.name}
+      </span>
+    ))}
   </div>
 );
 
