@@ -16,6 +16,7 @@ type PresetsType = {
 
 const Sidebar: React.FC<PresetsType> = ({ presets, handleNewPreset }) => (
   <div className="sidebar">
+    <div className="presets-header">Presets</div>
     {presets.map((universe, index) =>
       universe.preset ? (
         <span
