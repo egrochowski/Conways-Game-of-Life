@@ -2,6 +2,7 @@ import * as React from "react";
 import Universe from "./universe.tsx";
 import Sidebar from "./sidebar.tsx";
 import Menu from "./menu.tsx";
+import About from "./about.tsx";
 import axios from "axios";
 import produce from "immer";
 
@@ -9,6 +10,7 @@ const numRows = 30;
 const numCols = 50;
 let initialState: number[][];
 let initialized = false;
+let generations = 0;
 
 const reset = () => {
   const uni = [];
@@ -141,6 +143,7 @@ const App = () => {
     if (!runningRef.current) {
       return;
     }
+    generations++;
     setUniverse(getNextGeneration);
     setTimeout(runSimulation, 500);
   }, []);
@@ -160,6 +163,7 @@ const App = () => {
               isRunning={runningRef.current}
             ></Menu>
           </div>
+          <About generations={generations} />
         </div>
       </div>
     </>
