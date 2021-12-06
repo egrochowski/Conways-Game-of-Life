@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Universe from './universe.tsx';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./components/app.tsx";
 
-ReactDOM.render(<Universe />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
