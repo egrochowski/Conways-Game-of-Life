@@ -6,9 +6,6 @@ module.exports = {
   },
 
   addUniverse: async (universe) => {
-    const newUniverse = await new db(universe)
-      .save()
-      .then(() => console.log("we did it ?"))
-      .catch((e) => console.error(e));
+    const newUniverse = await new db(universe).save().catch(console.error);
   },
 };
