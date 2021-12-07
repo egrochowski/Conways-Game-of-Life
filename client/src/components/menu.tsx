@@ -2,6 +2,7 @@ import * as React from "react";
 
 interface Actions {
   onPlayStop(): void;
+  onChange(): void;
   onReset(): void;
   onClear(): void;
   onSave(): void;
@@ -10,6 +11,7 @@ interface Actions {
 
 const Menu: React.FC<Actions> = ({
   onPlayStop,
+  onChange,
   onReset,
   onClear,
   onSave,
@@ -26,6 +28,13 @@ const Menu: React.FC<Actions> = ({
     <button className="save" onClick={onSave}>
       Save Initial State
     </button>
+    <input
+      onChange={onChange}
+      className="state-name-input"
+      name="stateName"
+      type="text"
+      placeholder="Name your initial save..."
+    />
   </div>
 );
 
