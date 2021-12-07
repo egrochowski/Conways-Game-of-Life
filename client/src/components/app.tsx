@@ -5,6 +5,7 @@ import Menu from "./menu.tsx";
 import About from "./about.tsx";
 import axios from "axios";
 import produce from "immer";
+import { getPresets } from "../../../server/model";
 
 const numRows = 30;
 const numCols = 50;
@@ -22,6 +23,8 @@ const reset = () => {
 };
 
 const App = () => {
+  const [stateName, setStateName] = React.useState("");
+
   const [universe, setUniverse] = React.useState(reset);
   const [presets, setPresets] = React.useState([]);
   const [isRunning, setAction] = React.useState(false);
@@ -29,12 +32,7 @@ const App = () => {
   runningRef.current = isRunning;
 
   React.useEffect(() => {
-    axios
-      .get("/presets")
-      .then((results) => setPresets(results.data))
-      .catch((error) => {
-        error;
-      });
+    getPresets();
   }, []);
 
   const udpateUniverse = () =>
@@ -55,6 +53,15 @@ const App = () => {
         );
       });
     });
+
+  const getPresets = () => {
+    axios
+      .get("/presets")
+      .then((results) => setPresets(results.data))
+      .catch((error) => {
+        error;
+      });
+  };
 
   const handlePlayStop = () => {
     setAction(!isRunning);
@@ -83,12 +90,16 @@ const App = () => {
     );
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStateName(e.target.value);
+  };
+
   const handleSave = () => {
     if (initialState) {
-      const obj = {}; // do organization here
+      const obj = { name: stateName, preset: false, universe: universe };
       axios
         .post("/presets", obj)
-        .then(() => console.log("Success")) // for now
+        .then(() => getPresets())
         .catch((e) => {
           console.error(e);
         });
@@ -170,6 +181,7 @@ const App = () => {
             <Universe updateUniverse={udpateUniverse} />
             <Menu
               className="options-menu"
+              onChange={handleChange}
               onPlayStop={handlePlayStop}
               onReset={handleReset}
               onClear={handleClear}
