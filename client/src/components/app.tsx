@@ -5,7 +5,6 @@ import Menu from "./menu.tsx";
 import About from "./about.tsx";
 import axios from "axios";
 import produce from "immer";
-import { getPresets } from "../../../server/model";
 
 const numRows = 30;
 const numCols = 50;
@@ -96,9 +95,12 @@ const App = () => {
 
   const handleSave = () => {
     if (initialState) {
-      const obj = { name: stateName, preset: false, universe: universe };
       axios
-        .post("/presets", obj)
+        .post("/presets", {
+          name: stateName,
+          preset: false,
+          universe: initialState,
+        })
         .then(() => getPresets())
         .catch((e) => {
           console.error(e);
@@ -164,10 +166,10 @@ const App = () => {
   };
 
   const runSimulation = React.useCallback(() => {
-    generations++;
     if (!runningRef.current) {
       return;
     }
+    generations++;
     setUniverse(getNextGeneration);
     setTimeout(runSimulation, 500);
   }, []);
