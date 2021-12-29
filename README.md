@@ -12,6 +12,6 @@
 * Mongoose: Version 6.0.14
 * Node.js: Version 14.17.5
 * React: Version 17.0.2
-* MongoDB: 4.2.1
-* Immer: 9.0.7
-* Styled-Components: 5.3.3
+* MongoDB: Version 4.2.1
+* Immer: Version 9.0.7
+* Styled-Components: Version 5.3.3
