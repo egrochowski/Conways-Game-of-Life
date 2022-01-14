@@ -4,7 +4,7 @@
 
 ## Summary
 
-> The Game of Life is a cellualar automaton created by John Conway.
+> The Game of Life is a cellular automaton created by John Conway.
 
 ## Main Technologies
 * Axios: Version 0.24.0
