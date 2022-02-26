@@ -1,11 +1,16 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "./public/",
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitReturns": true,
     "noImplicitAny": true,
     "module": "es6",
+    "moduleResolution": "node",
     "target": "es5",
-    "jsx": "react",
     "allowJs": true,
-    "moduleResolution": "node"
-  }
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["./client/src/**/*"]
 }
