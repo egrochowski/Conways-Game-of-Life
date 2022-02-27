@@ -10,7 +10,7 @@ const Grid = styled.div`
 `;
 
 interface IUniverse {
-  updateUniverse(): any;
+  updateUniverse(): Number[][];
 }
 
 const Universe: React.FC<IUniverse> = ({ updateUniverse }) => (
