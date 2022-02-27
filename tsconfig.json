@@ -12,5 +12,5 @@
     "jsx": "react",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["./client/src/**/*"]
+  "include": ["./client/**/*", "client/index.tsx"]
 }
