@@ -86,17 +86,32 @@ a:hover {
 .sidebar {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.preset-container {
+  height: 45%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  direction: rtl;
 }
 
 .presets-header {
   text-align: center;
+  margin-top: 2rem;
   padding: 0.5rem;
   border-bottom: 1px solid white;
 }
 
 .preset {
+  text-align: center;
   margin: 0.5rem;
   cursor: pointer;
+  direction: ltr;
 }
 
 .preset:hover {
@@ -104,6 +119,7 @@ a:hover {
 }
 
 .about {
+  margin-top: 2rem;
   letter-spacing: 0.5px;
   line-height: 1.5rem;
 }
