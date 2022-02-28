@@ -9,12 +9,29 @@ const Grid = styled.div`
   margin: 0 2rem 1rem 2rem;
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 interface IUniverse {
-  updateUniverse(): Number[][];
+  updateUniverse(): React.ReactNode;
 }
 
 const Universe: React.FC<IUniverse> = ({ updateUniverse }) => (
-  <Grid className='universe'>{updateUniverse()}</Grid>
+  <Wrapper>
+    <div className='nav'>
+      <h1>
+        <a href='https://en.wikipedia.org/wiki/John_Horton_Conway' id='conway'>
+          {`John Conway`}
+        </a>
+        {`'s Game of Life`}
+      </h1>
+    </div>
+    <Grid className='universe'>{updateUniverse()}</Grid>
+  </Wrapper>
 );
 
 export default Universe;
