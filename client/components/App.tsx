@@ -10,9 +10,8 @@ const numRows = 30;
 const numCols = 50;
 let initialState: number[][];
 let initialized = false;
-let generations = 0;
 
-const reset = () => {
+const reset = (): number[][] => {
   const uni = [];
   for (let i = 0; i < numRows; i++) {
     // create an empty universe; all cells are dead
@@ -21,9 +20,9 @@ const reset = () => {
   return uni;
 };
 
-const App = () => {
+const App: React.FC = () => {
   const [stateName, setStateName] = React.useState('');
-
+  const [generations, setGenerations] = React.useState(0);
   const [universe, setUniverse] = React.useState(reset);
   const [presets, setPresets] = React.useState<any[]>(reset);
   const [isRunning, setAction] = React.useState(false);
@@ -63,7 +62,7 @@ const App = () => {
   };
 
   const handlePlayStop = () => {
-    setAction(!isRunning);
+    setAction(!isRunning); // toggle on/off
     if (!initialized) {
       initialized = true;
       initialState = universe;
@@ -75,7 +74,7 @@ const App = () => {
   };
 
   const handleClear = () => {
-    generations = 0;
+    setGenerations(0);
     initialized = false;
     setAction(false);
     setUniverse((uni: number[][]) => produce(uni, reset));
@@ -87,8 +86,7 @@ const App = () => {
     setUniverse((universe: number[][]) =>
       produce(universe, () => presets[index].universe)
     );
-    // reset generations count
-    generations = 0;
+    setGenerations(0);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,7 +112,7 @@ const App = () => {
     if (!initialState) {
       return;
     }
-    generations = 0;
+    setGenerations(0);
     setAction(false);
     setUniverse((universe: number[][]) =>
       produce(universe, () => initialState)
@@ -171,31 +169,27 @@ const App = () => {
     if (!runningRef.current) {
       return;
     }
-    generations++;
+    setGenerations((generation) => generation + 1);
     setUniverse(getNextGeneration);
-    setTimeout(runSimulation, 500);
+    setTimeout(runSimulation, 475);
   }, []);
 
   return (
-    <>
-      <div className='container'>
-        <div className='main'>
-          <Sidebar presets={presets} handleNewPreset={handleNewPreset} />
-          <div className='game-of-life'>
-            <Universe updateUniverse={updateUniverse} />
-            <Menu
-              onChange={handleChange}
-              onPlayStop={handlePlayStop}
-              onReset={handleReset}
-              onClear={handleClear}
-              onSave={handleSave}
-              isRunning={runningRef.current}
-            ></Menu>
-          </div>
-          <About generations={generations} />
-        </div>
+    <main className='main'>
+      <Sidebar presets={presets} handleNewPreset={handleNewPreset} />
+      <div className='game-of-life'>
+        <Universe updateUniverse={updateUniverse} />
+        <Menu
+          onChange={handleChange}
+          onPlayStop={handlePlayStop}
+          onReset={handleReset}
+          onClear={handleClear}
+          onSave={handleSave}
+          isRunning={runningRef.current}
+        ></Menu>
       </div>
-    </>
+      <About generations={generations} />
+    </main>
   );
 };
 
