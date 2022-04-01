@@ -1,6 +1,14 @@
 const model = require('./../model/');
 
 module.exports = {
+  getAll: async (req, res) => {
+    try {
+      res.send(await model.getAlL());
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  },
+
   getPresets: async (req, res) => {
     try {
       res.send(await model.getPresets());
