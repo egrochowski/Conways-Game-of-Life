@@ -1,8 +1,12 @@
-const db = require("./../db/");
+const db = require('./../db/');
 
 module.exports = {
   getPresets: async () => {
-    return await db.find({});
+    return await db.find({ preset: true });
+  },
+
+  getUserSaves: async () => {
+    return await db.find({ preset: false });
   },
 
   addUniverse: async (universe) => {
