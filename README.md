@@ -1,10 +1,47 @@
-# MVP: Conway's Game of Life
+# Conway's Game of Life
 
 > An interactive simulation of John Conway's Game of Life
 
 ## Summary
 
 > The Game of Life is a cellular automaton created by John Conway.
+
+## Installation
+
+1. Clone project
+
+```
+git clone https://github.com/egrochowski/Conways-Game-of-Life.git
+```
+
+2. cd into folder
+
+```
+cd Conways-Game-of-Life
+```
+
+3. Download dependencies
+
+```
+npm install
+```
+
+4. Install [Mongo](https://www.mongodb.com/docs/v4.0/tutorial/install-mongodb-on-os-x/#installing-mongodb-4-0-edition-edition)
+
+5. Start Mongo Server
+
+```
+brew services start mongodb-community
+```
+
+
+## Usage
+
+1. Start server `npm start` in `root` directory
+
+2. Run `npm build` or `npm build:dev` for watch for changes 
+
+3. Open http://127.0.0.1:3000 in your browser
 
 ## Main Technologies
 
