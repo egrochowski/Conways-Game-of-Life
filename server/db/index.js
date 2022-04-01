@@ -1,17 +1,12 @@
-const client = require("mongodb");
-const mongoose = require("mongoose");
-const URI = "mongodb://localhost/game-of-life";
+const mongoose = require('mongoose');
+const URI = 'mongodb://localhost/game-of-life';
 
 mongoose.connect(URI);
 
 const db = mongoose.connection;
 
-db.on("error", () => {
-  console.log("Error connecting to database");
-});
-
-db.once("open", () => {
-  console.log("successfully connected to database");
+db.on('error', () => {
+  console.log('Error connecting to database');
 });
 
 const Universes = new mongoose.Schema(
@@ -25,4 +20,4 @@ const Universes = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("universes", Universes);
+module.exports = mongoose.model('universes', Universes);
