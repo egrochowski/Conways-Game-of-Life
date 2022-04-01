@@ -1,6 +1,10 @@
 const db = require('./../db/');
 
 module.exports = {
+  getAlL: async () => {
+    return await db.find({});
+  },
+
   getPresets: async () => {
     return await db.find({ preset: true });
   },
