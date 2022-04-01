@@ -23,14 +23,15 @@ const reset = (): number[][] => {
 const App: React.FC = () => {
   const [stateName, setStateName] = React.useState('');
   const [generations, setGenerations] = React.useState(0);
-  const [universe, setUniverse] = React.useState(reset);
+  const [universe, setUniverse] = React.useState(reset); // current universe rendered to page
   const [presets, setPresets] = React.useState<any[]>(reset);
+  const [userSaves, setUserSaves] = React.useState<any[]>(reset);
   const [isRunning, setAction] = React.useState(false);
   const runningRef = React.useRef(isRunning);
   runningRef.current = isRunning;
 
   React.useEffect(() => {
-    getPresets();
+    getUniverses();
   }, []);
 
   const updateUniverse = () =>
@@ -52,13 +53,19 @@ const App: React.FC = () => {
       });
     });
 
-  const getPresets = () => {
+  const getUniverses = () => {
     axios
-      .get('/presets')
-      .then((results) => setPresets(results.data))
-      .catch((error) => {
-        error;
-      });
+      .get('/universes')
+      .then((universes: any) => {
+        let presets: number[][] = [];
+        let userSaves: number[][] = [];
+        universes.data.forEach((universe: any) => {
+          universe.preset ? presets.push(universe) : userSaves.push(universe);
+        });
+        setUserSaves(userSaves);
+        setPresets(presets);
+      })
+      .catch(console.error);
   };
 
   const handlePlayStop = () => {
@@ -81,10 +88,12 @@ const App: React.FC = () => {
     initialState = reset();
   };
 
-  const handleNewPreset = (index: number) => {
+  const handleNewUniverse = (preset: boolean, index: number) => {
     setAction(false);
     setUniverse((universe: number[][]) =>
-      produce(universe, () => presets[index].universe)
+      produce(universe, () =>
+        preset ? presets[index].universe : userSaves[index].universe
+      )
     );
     setGenerations(0);
   };
@@ -101,7 +110,7 @@ const App: React.FC = () => {
           preset: false,
           universe: initialState,
         })
-        .then(() => getPresets())
+        .then(() => getUniverses())
         .catch((e) => {
           console.error(e);
         });
@@ -176,7 +185,11 @@ const App: React.FC = () => {
 
   return (
     <main className='main'>
-      <Sidebar presets={presets} handleNewPreset={handleNewPreset} />
+      <Sidebar
+        presets={presets}
+        userSaves={userSaves}
+        handleNewUniverse={handleNewUniverse}
+      />
       <div className='game-of-life'>
         <Universe updateUniverse={updateUniverse} />
         <Menu
