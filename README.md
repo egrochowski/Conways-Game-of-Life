@@ -17,7 +17,7 @@ git clone https://github.com/egrochowski/Conways-Game-of-Life.git
 2. cd into folder
 
 ```
-cd Conways-Game-of-Life
+cd conways-game-of-life
 ```
 
 3. Download dependencies
@@ -34,14 +34,13 @@ npm install
 brew services start mongodb-community
 ```
 
-
 ## Usage
 
-1. Start server `npm start` in `root` directory
+1. Start server `npm start` in the `root` directory
 
-2. Run `npm build` or `npm build:dev` for watch for changes 
+2. Run `npm build` or `npm build:dev` for watch for changes in the `root` directory
 
-3. Open http://127.0.0.1:3000 in your browser
+3. Open http://127.0.0.1:3000/ in your browser
 
 ## Main Technologies
 
@@ -53,3 +52,5 @@ brew services start mongodb-community
 - MongoDB: Version 4.2.1
 - Immer: Version 9.0.7
 - Styled-Components: Version 5.3.3
+
+[![celluar automaton: conways game of life](https://img.shields.io/badge/cellular%20automaton-conways%20game%20of%20life-green)](https://github.com/egrochowski)
