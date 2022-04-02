@@ -28,7 +28,7 @@ const config = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
-  mode: 'development',
+  mode: 'production',
 };
 
 module.exports = config;
