@@ -105,7 +105,7 @@ const App: React.FC = () => {
   const handleSave = () => {
     if (initialState) {
       axios
-        .post('/presets', {
+        .post('/universe', {
           name: stateName,
           preset: false,
           universe: initialState,
