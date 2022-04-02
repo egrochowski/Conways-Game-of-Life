@@ -38,7 +38,7 @@ brew services start mongodb-community
 
 1. Start server `npm start` in the `root` directory
 
-2. Run `npm build` or `npm build:dev` to watch for changes in the `root` directory
+2. Run `npm run build` or `npm run build:dev` to watch for changes in the `root` directory
 
 3. Open http://127.0.0.1:3000/ in your browser
 
