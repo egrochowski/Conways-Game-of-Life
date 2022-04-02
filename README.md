@@ -11,7 +11,7 @@
 1. Clone project
 
 ```
-git clone https://github.com/egrochowski/Conways-Game-of-Life.git
+git clone https://github.com/egrochowski/conways-game-of-life.git
 ```
 
 2. cd into folder
