@@ -26,7 +26,7 @@ cd conways-game-of-life
 npm install
 ```
 
-4. Install [Mongo](https://www.mongodb.com/docs/v4.0/tutorial/install-mongodb-on-os-x/#installing-mongodb-4-0-edition-edition)
+4. Install [Mongo](https://www.mongodb.com/docs/v4.0/administration/install-community/)
 
 5. Start Mongo Server
 
@@ -38,7 +38,7 @@ brew services start mongodb-community
 
 1. Start server `npm start` in the `root` directory
 
-2. Run `npm build` or `npm build:dev` for watch for changes in the `root` directory
+2. Run `npm build` or `npm build:dev` to watch for changes in the `root` directory
 
 3. Open http://127.0.0.1:3000/ in your browser
 
