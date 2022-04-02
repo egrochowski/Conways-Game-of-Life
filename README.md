@@ -53,4 +53,4 @@ brew services start mongodb-community
 - Immer: Version 9.0.7
 - Styled-Components: Version 5.3.3
 
-[![celluar automaton: conways game of life](https://img.shields.io/badge/cellular%20automaton-conways%20game%20of%20life-green)](https://github.com/egrochowski)
+[![celluar automaton: conways game of life](https://img.shields.io/badge/cellular%20automaton-conways%20game%20of%20life-green)](https://github.com/egrochowski/conways-game-of-life)
