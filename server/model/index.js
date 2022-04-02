@@ -1,7 +1,7 @@
 const db = require('./../db/');
 
 module.exports = {
-  getAlL: async () => {
+  getAll: async () => {
     return await db.find({});
   },
 
