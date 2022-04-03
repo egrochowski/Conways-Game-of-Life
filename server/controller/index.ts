@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import {
   queryAllUniverses,
   queryPresets,
@@ -5,9 +6,7 @@ import {
   saveUniverse,
 } from './../model/';
 
-import { Request, Response } from 'express';
-
-export const getAll = async (req: Request, res: Response) => {
+export const getAll = async (req: Request, res: Response): Promise<void> => {
   try {
     res.send(await queryAllUniverses());
   } catch (error) {
@@ -15,7 +14,10 @@ export const getAll = async (req: Request, res: Response) => {
   }
 };
 
-export const getUserSaves = async (req: Request, res: Response) => {
+export const getUserSaves = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     res.send(await queryUserSaves());
   } catch (error) {
@@ -34,10 +36,13 @@ export const getPresets = async (
   }
 };
 
-export const addUniverse = (req: Request, res: Response): void => {
+export const addUniverse = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
-    saveUniverse(req.body);
-    res.sendStatus(201);
+    const response = await saveUniverse(req.body);
+    res.status(201).send(response);
   } catch (error) {
     res.status(500).send(error);
   }
