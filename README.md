@@ -20,10 +20,16 @@ git clone https://github.com/egrochowski/conways-game-of-life.git
 cd conways-game-of-life
 ```
 
-3. Download dependencies
+3. Download dependencies in each repository
 
 ```
 npm install
+```
+
+- Or run installation script in the `root` directory
+
+```
+sh devinstall.sh
 ```
 
 4. Install [Mongo](https://www.mongodb.com/docs/v4.0/administration/install-community/)
