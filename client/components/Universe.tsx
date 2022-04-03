@@ -24,7 +24,11 @@ const Universe: React.FC<IUniverse> = ({ updateUniverse }) => (
   <Wrapper>
     <div className='nav'>
       <h1>
-        <a href='https://en.wikipedia.org/wiki/John_Horton_Conway' id='conway'>
+        <a
+          href='https://en.wikipedia.org/wiki/John_Horton_Conway'
+          id='conway'
+          target={'_blank'}
+        >
           {`John Conway`}
         </a>
         {`'s Game of Life`}
