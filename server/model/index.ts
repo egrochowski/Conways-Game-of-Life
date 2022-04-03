@@ -12,6 +12,6 @@ export const queryUserSaves = async (): Promise<void> => {
   return await db.find({ preset: false });
 };
 
-export const saveUniverse = async (universe: number[][]) => {
-  return await new db(universe).save().catch(console.error);
+export const saveUniverse = async (universe: object): Promise<void> => {
+  return await new db(universe).save();
 };
