@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "./public/",
     "sourceMap": true,
     "strict": true,
     "noImplicitReturns": true,
@@ -12,6 +11,5 @@
     "jsx": "react",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
-  },
-  "include": ["./client/**/*", "client/index.tsx"]
+  }
 }
