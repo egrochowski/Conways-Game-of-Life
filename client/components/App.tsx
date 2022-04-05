@@ -3,8 +3,9 @@ import Universe from './Universe';
 import Sidebar from './Sidebar';
 import Menu from './Menu';
 import About from './About';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import produce from 'immer';
+import IUniverse from '../Interfaces/IUniverse';
 
 const numRows = 30;
 const numCols = 50;
@@ -23,9 +24,9 @@ const reset = (): number[][] => {
 const App: React.FC = () => {
   const [stateName, setStateName] = React.useState('');
   const [generations, setGenerations] = React.useState(0);
-  const [universe, setUniverse] = React.useState(reset); // current universe rendered to page
-  const [presets, setPresets] = React.useState<any[]>(reset);
-  const [userSaves, setUserSaves] = React.useState<any[]>(reset);
+  const [universe, setUniverse] = React.useState<number[][]>(reset); // current universe rendered to page
+  const [presets, setPresets] = React.useState<IUniverse[]>([]);
+  const [userSaves, setUserSaves] = React.useState<IUniverse[]>([]);
   const [isRunning, setAction] = React.useState(false);
   const runningRef = React.useRef(isRunning);
   runningRef.current = isRunning;
@@ -56,10 +57,10 @@ const App: React.FC = () => {
   const getUniverses = () => {
     axios
       .get('/universes')
-      .then((universes: any) => {
-        let presets: number[][] = [];
-        let userSaves: number[][] = [];
-        universes.data.forEach((universe: any) => {
+      .then((universes: AxiosResponse) => {
+        let presets: IUniverse[] = [];
+        let userSaves: IUniverse[] = [];
+        universes.data.forEach((universe: IUniverse) => {
           universe.preset ? presets.push(universe) : userSaves.push(universe);
         });
         setUserSaves(userSaves);
