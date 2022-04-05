@@ -20,4 +20,4 @@ const Universes = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('universes', Universes);
+export default mongoose.model('universes', Universes);
