@@ -1,24 +1,13 @@
 import * as React from 'react';
+import IUniverse from './../Interfaces/IUniverse';
+import { Universe } from './../types/universe';
 
-interface Universe {
-  createdAt: String;
-  name: String;
-  preset: boolean;
-  universe: number[][];
-}
-
-type UniverseType = {
-  presets: Universe[];
-  userSaves: Universe[];
-  handleNewUniverse(preset: boolean, index: number): void;
-};
-
-const Sidebar: React.FC<UniverseType> = ({
+const Sidebar: React.FC<Universe> = ({
   presets,
   userSaves,
   handleNewUniverse,
 }) => {
-  const displayUniverses = (universes: Universe[]) => {
+  const displayUniverses = (universes: IUniverse[]) => {
     return universes.map((universe, index) => (
       <span
         key={index}
