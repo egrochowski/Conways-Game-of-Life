@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { ReactElement } from 'react';
 import IUniverse from './../Interfaces/IUniverse';
 import { Universe } from './../types/universe';
 
@@ -6,7 +6,7 @@ const Sidebar: React.FC<Universe> = ({
   presets,
   userSaves,
   handleNewUniverse,
-}) => {
+}): ReactElement => {
   const displayUniverses = (universes: IUniverse[]) => {
     return universes.map((universe, index) => (
       <span

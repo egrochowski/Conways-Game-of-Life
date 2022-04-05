@@ -1,4 +1,10 @@
-import * as React from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  ReactElement,
+} from 'react';
 import Universe from './Universe';
 import Sidebar from './Sidebar';
 import Menu from './Menu';
@@ -21,17 +27,17 @@ const reset = (): number[][] => {
   return uni;
 };
 
-const App: React.FC = () => {
-  const [stateName, setStateName] = React.useState('');
-  const [generations, setGenerations] = React.useState(0);
-  const [universe, setUniverse] = React.useState<number[][]>(reset); // current universe rendered to page
-  const [presets, setPresets] = React.useState<IUniverse[]>([]);
-  const [userSaves, setUserSaves] = React.useState<IUniverse[]>([]);
-  const [isRunning, setAction] = React.useState(false);
-  const runningRef = React.useRef(isRunning);
+const App: React.FC = (): ReactElement => {
+  const [stateName, setStateName] = useState('');
+  const [generations, setGenerations] = useState(0);
+  const [universe, setUniverse] = useState<number[][]>(reset); // current universe rendered to page
+  const [presets, setPresets] = useState<IUniverse[]>([]);
+  const [userSaves, setUserSaves] = useState<IUniverse[]>([]);
+  const [isRunning, setAction] = useState(false);
+  const runningRef = useRef(isRunning);
   runningRef.current = isRunning;
 
-  React.useEffect(() => {
+  useEffect(() => {
     getUniverses();
   }, []);
 
@@ -108,7 +114,6 @@ const App: React.FC = () => {
       axios
         .post('/universe', {
           name: stateName,
-          preset: false,
           universe: initialState,
         })
         .then(() => getUniverses())
@@ -175,7 +180,7 @@ const App: React.FC = () => {
     }
   };
 
-  const runSimulation = React.useCallback(() => {
+  const runSimulation = useCallback(() => {
     if (!runningRef.current) {
       return;
     }
