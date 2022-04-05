@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { IUpdateUniverse } from '../Interfaces/IUniverse';
 import styled from 'styled-components';
 
 const numCols = 50;
@@ -16,11 +17,7 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-interface IUniverse {
-  updateUniverse(): React.ReactNode;
-}
-
-const Universe: React.FC<IUniverse> = ({ updateUniverse }) => (
+const Universe: React.FC<IUpdateUniverse> = ({ updateUniverse }) => (
   <Wrapper>
     <div className='nav'>
       <h1>
