@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  ReactElement,
+} from 'react';
 import Universe from './Universe';
 import Sidebar from './Sidebar';
 import Menu from './Menu';
@@ -21,7 +27,7 @@ const reset = (): number[][] => {
   return uni;
 };
 
-const App: React.FC = () => {
+const App: React.FC = (): ReactElement => {
   const [stateName, setStateName] = useState('');
   const [generations, setGenerations] = useState(0);
   const [universe, setUniverse] = useState<number[][]>(reset); // current universe rendered to page
@@ -108,7 +114,6 @@ const App: React.FC = () => {
       axios
         .post('/universe', {
           name: stateName,
-          preset: true,
           universe: initialState,
         })
         .then(() => getUniverses())

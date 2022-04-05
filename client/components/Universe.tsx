@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { IUpdateUniverse } from '../Interfaces/IUniverse';
 import styled from 'styled-components';
 

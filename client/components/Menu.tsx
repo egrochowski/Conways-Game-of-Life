@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { ReactElement } from 'react';
 import { IActions } from './../Interfaces/IActions';
 
 const Menu: React.FC<IActions> = ({
@@ -8,7 +8,7 @@ const Menu: React.FC<IActions> = ({
   onClear,
   onSave,
   isRunning,
-}) => (
+}): ReactElement => (
   <div className='menu'>
     <button onClick={onPlayStop}>{isRunning ? 'Stop' : 'Start'}</button>
     <button className='clear' onClick={onClear}>
