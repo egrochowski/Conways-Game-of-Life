@@ -36,8 +36,7 @@ export const saveUniverse = async (
   res: Response
 ): Promise<void> => {
   try {
-    const response = await db(req.body).save();
-    res.status(201).json(response);
+    res.status(201).json(await db(req.body).save());
   } catch (error) {
     res.status(500).json(error);
   }
