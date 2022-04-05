@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { IUpdateUniverse } from '../Interfaces/IUniverse';
 import styled from 'styled-components';
 
@@ -17,7 +17,9 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const Universe: React.FC<IUpdateUniverse> = ({ updateUniverse }) => (
+const Universe: React.FC<IUpdateUniverse> = ({
+  updateUniverse,
+}): ReactElement => (
   <Wrapper>
     <div className='nav'>
       <h1>
