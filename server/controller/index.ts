@@ -8,9 +8,9 @@ import {
 
 export const getAll = async (req: Request, res: Response): Promise<void> => {
   try {
-    res.send(await queryAllUniverses());
+    res.json(await queryAllUniverses());
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 };
 
@@ -19,9 +19,9 @@ export const getUserSaves = async (
   res: Response
 ): Promise<void> => {
   try {
-    res.send(await queryUserSaves());
+    res.json(await queryUserSaves());
   } catch (error) {
-    res.sendStatus(500).send(error);
+    res.sendStatus(500).json(error);
   }
 };
 
@@ -30,9 +30,9 @@ export const getPresets = async (
   res: Response
 ): Promise<void> => {
   try {
-    res.send(await queryPresets());
+    res.json(await queryPresets());
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 };
 
@@ -42,8 +42,8 @@ export const addUniverse = async (
 ): Promise<void> => {
   try {
     const response = await saveUniverse(req.body);
-    res.status(201).send(response);
+    res.status(201).json(response);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 };
