@@ -1,15 +1,7 @@
 import * as React from 'react';
+import { IActions } from './../Interfaces/IActions';
 
-interface Actions {
-  onPlayStop(): void;
-  onChange(e: React.ChangeEvent<HTMLInputElement>): void;
-  onReset(): void;
-  onClear(): void;
-  onSave(): void;
-  isRunning: boolean;
-}
-
-const Menu: React.FC<Actions> = ({
+const Menu: React.FC<IActions> = ({
   onPlayStop,
   onChange,
   onReset,
