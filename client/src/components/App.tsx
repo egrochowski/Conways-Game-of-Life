@@ -38,6 +38,7 @@ const App: React.FC = (): ReactElement => {
   runningRef.current = isRunning;
 
   useEffect(() => {
+    getUserSaves();
     getUniverses();
   }, []);
 
@@ -60,17 +61,22 @@ const App: React.FC = (): ReactElement => {
       });
     });
 
-  const getUniverses = () => {
+  const universeReducer = (name: string, universe: number[][]) => {
+    return { name, universe, preset: false };
+  };
+
+  const getUserSaves = (): void => {
+    const universes: IUniverse[] = JSON.parse(
+      localStorage.getItem('universes') || '[]'
+    );
+    setUserSaves(universes);
+  };
+
+  const getUniverses = (): void => {
     axios
       .get('/universes')
       .then((universes: AxiosResponse) => {
-        let presets: IUniverse[] = [];
-        let userSaves: IUniverse[] = [];
-        universes.data.forEach((universe: IUniverse) => {
-          universe.preset ? presets.push(universe) : userSaves.push(universe);
-        });
-        setUserSaves(userSaves);
-        setPresets(presets);
+        setPresets(universes.data);
       })
       .catch(console.error);
   };
@@ -109,17 +115,33 @@ const App: React.FC = (): ReactElement => {
     setStateName(e.target.value);
   };
 
+  const savePreset = () => {
+    axios
+      .post('/universe', {
+        name: stateName,
+        preset: true,
+        universe: initialState,
+      })
+      .then(() => getUniverses())
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
   const handleSave = () => {
     if (initialState) {
-      axios
-        .post('/universe', {
-          name: stateName,
-          universe: initialState,
-        })
-        .then(() => getUniverses())
-        .catch((e) => {
-          console.error(e);
-        });
+      let currentUniverses: IUniverse[] = JSON.parse(
+        localStorage.getItem('universes') || '[]'
+      );
+
+      localStorage.setItem(
+        'universes',
+        JSON.stringify([
+          ...currentUniverses,
+          universeReducer(stateName, initialState),
+        ])
+      );
+      getUserSaves();
     }
   };
 
@@ -135,49 +157,38 @@ const App: React.FC = (): ReactElement => {
   };
 
   const getNextGeneration = (universe: number[][]) => {
-    {
-      return produce(universe, (nextUniverse: number[][]) => {
-        // x and y represent a cell's coordinates in the universe
-        for (let x = 0; x < numRows; x++) {
-          for (let y = 0; y < numCols; y++) {
-            let neighborsAlive = 0;
+    const operations = [
+      [-1, -1],
+      [-1, 0],
+      [-1, 1],
+      [0, -1],
+      [0, 1],
+      [1, -1],
+      [1, 0],
+      [1, 1],
+    ];
+    return produce(universe, (nextUniverse: number[][]) => {
+      // x and y represent a cell's coordinates in the universe
+      for (let x = 0; x < numRows; x++) {
+        for (let y = 0; y < numCols; y++) {
+          let neighborsAlive = 0;
 
-            for (let i = x - 1; i <= x + 1; i++) {
-              for (let j = y - 1; j <= y + 1; j++) {
-                if (
-                  i >= 0 &&
-                  j >= 0 &&
-                  i < numRows &&
-                  j < numCols &&
-                  universe[i][j]
-                ) {
-                  if (i === x && j === y) {
-                    // do nothing
-                  } else {
-                    neighborsAlive++;
-                  }
-                }
-              }
+          operations.forEach(([row, col]) => {
+            let i = row + x;
+            let j = col + y;
+            if (i >= 0 && i < numRows && j >= 0 && j < numCols) {
+              neighborsAlive += universe[i][j];
             }
+          });
 
-            // if a cell is alive...
-            if (universe[x][y]) {
-              if (neighborsAlive === 2 || neighborsAlive === 3) {
-                nextUniverse[x][y] = 1;
-              } else {
-                nextUniverse[x][y] = 0;
-              }
-            } else {
-              if (neighborsAlive === 3) {
-                nextUniverse[x][y] = 1;
-              } else {
-                nextUniverse[x][y] = 0;
-              }
-            }
+          if (neighborsAlive < 2 || neighborsAlive > 3) {
+            nextUniverse[x][y] = 0;
+          } else if (!universe[x][y] && neighborsAlive === 3) {
+            nextUniverse[x][y] = 1;
           }
         }
-      });
-    }
+      }
+    });
   };
 
   const runSimulation = useCallback(() => {

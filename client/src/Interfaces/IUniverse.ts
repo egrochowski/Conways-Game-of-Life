@@ -1,11 +1,7 @@
 export default interface IUniverse {
-  _id: string;
   name: string;
-  preset: boolean;
   universe: number[][];
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  preset: boolean;
 }
 
 export interface IUpdateUniverse {
