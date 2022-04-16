@@ -62,7 +62,7 @@ const App: React.FC = (): ReactElement => {
     });
 
   const universeReducer = (name: string, universe: number[][]) => {
-    return { name, universe, preset: false };
+    return { name, universe, userSave: true };
   };
 
   const getUserSaves = (): void => {
@@ -101,11 +101,11 @@ const App: React.FC = (): ReactElement => {
     initialState = reset();
   };
 
-  const handleNewUniverse = (preset: boolean, index: number) => {
+  const handleNewUniverse = (userSave: boolean, index: number) => {
     setAction(false);
     setUniverse((universe: number[][]) =>
       produce(universe, () =>
-        preset ? presets[index].universe : userSaves[index].universe
+        userSave ? userSaves[index].universe : presets[index].universe
       )
     );
     setGenerations(0);
@@ -119,7 +119,6 @@ const App: React.FC = (): ReactElement => {
     axios
       .post('/universe', {
         name: stateName,
-        preset: true,
         universe: initialState,
       })
       .then(() => getUniverses())
