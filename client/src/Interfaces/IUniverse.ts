@@ -1,7 +1,7 @@
 export default interface IUniverse {
   name: string;
   universe: number[][];
-  preset: boolean;
+  userSave: boolean;
 }
 
 export interface IUpdateUniverse {
