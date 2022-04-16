@@ -12,7 +12,6 @@ db.on('error', () => {
 const UniverseSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    preset: { type: Boolean, default: false, index: true },
     universe: { type: Array, required: true },
   },
   {
@@ -20,4 +19,4 @@ const UniverseSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model('universes', UniverseSchema);
+export const universeModel = mongoose.model('universes', UniverseSchema);

@@ -13,7 +13,7 @@ const Sidebar: React.FC<Universe> = ({
         key={index}
         className='preset'
         onClick={() => {
-          handleNewUniverse(universe.preset, index);
+          handleNewUniverse(universe.userSave, index);
         }}
       >
         {universe.name}
